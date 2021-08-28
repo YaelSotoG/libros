@@ -8,6 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar(),
+      body: crearlista(),
     );
   }
 }
@@ -19,4 +20,12 @@ Widget appbar() {
       IconButton(onPressed: () {}, icon: FaIcon(FontAwesomeIcons.search))
     ],
   );
+}
+
+Widget crearlista() {
+  return ListView.builder(itemBuilder: (BuildContext context, int index) {
+    return ListTile(
+      title: Text(''),
+    );
+  });
 }
