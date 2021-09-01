@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:libros/src/models/categoria_model.dart';
 import 'package:libros/src/providers/libros_providers.dart';
 
+import 'categorias_page.dart';
+
 final libro = new LibrosProvider();
 // Future<List<Categoria>> categoria = libro.getCategorias();
 
@@ -46,8 +48,14 @@ class HomePage extends StatelessWidget {
               itemCount: snapshot.data.length,
               // itemCount: categoria.length,
               itemBuilder: (BuildContext context, int index) {
-                print(snapshot.data[index].name);
+                print(snapshot.data[index].categoryId);
                 return ListTile(
+                  onTap: () {
+                    final route = MaterialPageRoute(builder: (context) {
+                      return CategoriaPage();
+                    });
+                    Navigator.push(context, route);
+                  },
                   title: Text(snapshot.data[index].name),
                 );
               });

@@ -1,11 +1,22 @@
 // To parse this JSON data, do
 //
-//     final libros = librosFromMap(jsonString);
+//     final libro = libroFromJson(jsonString);
 
-import 'dart:convert';
+// import 'dart:convert';
 
 class Libros {
-  Libros({
+  List<Libro> items = [];
+  Libros();
+  Libros.fromJson(List<dynamic> jsonList) {
+    for (var item in jsonList) {
+      final libro = new Libro.fromJson(item);
+      items.add(libro);
+    }
+  }
+}
+
+class Libro {
+  Libro({
     this.id,
     this.title,
     this.author,
@@ -17,7 +28,6 @@ class Libros {
     this.language,
     this.urlDetails,
     this.urlDownload,
-    this.urlReadOnline,
     this.cover,
     this.thumbnail,
     this.numComments,
@@ -36,18 +46,13 @@ class Libros {
   String language;
   String urlDetails;
   String urlDownload;
-  String urlReadOnline;
   String cover;
   String thumbnail;
   String numComments;
-  List<dynamic> categories;
-  List<dynamic> tags;
+  List<Category> categories;
+  List<Tag> tags;
 
-  factory Libros.fromJson(String str) => Libros.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Libros.fromMap(Map<String, dynamic> json) => Libros(
+  factory Libro.fromJson(Map<String, dynamic> json) => Libro(
         id: json["ID"] == null ? null : json["ID"],
         title: json["title"] == null ? null : json["title"],
         author: json["author"] == null ? null : json["author"],
@@ -61,20 +66,19 @@ class Libros {
         language: json["language"] == null ? null : json["language"],
         urlDetails: json["url_details"] == null ? null : json["url_details"],
         urlDownload: json["url_download"] == null ? null : json["url_download"],
-        urlReadOnline:
-            json["url_read_online"] == null ? null : json["url_read_online"],
         cover: json["cover"] == null ? null : json["cover"],
         thumbnail: json["thumbnail"] == null ? null : json["thumbnail"],
         numComments: json["num_comments"] == null ? null : json["num_comments"],
         categories: json["categories"] == null
             ? null
-            : List<dynamic>.from(json["categories"].map((x) => x)),
+            : List<Category>.from(
+                json["categories"].map((x) => Category.fromJson(x))),
         tags: json["tags"] == null
             ? null
-            : List<dynamic>.from(json["tags"].map((x) => x)),
+            : List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
       );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
         "ID": id == null ? null : id,
         "title": title == null ? null : title,
         "author": author == null ? null : author,
@@ -86,13 +90,62 @@ class Libros {
         "language": language == null ? null : language,
         "url_details": urlDetails == null ? null : urlDetails,
         "url_download": urlDownload == null ? null : urlDownload,
-        "url_read_online": urlReadOnline == null ? null : urlReadOnline,
         "cover": cover == null ? null : cover,
         "thumbnail": thumbnail == null ? null : thumbnail,
         "num_comments": numComments == null ? null : numComments,
         "categories": categories == null
             ? null
-            : List<dynamic>.from(categories.map((x) => x)),
-        "tags": tags == null ? null : List<dynamic>.from(tags.map((x) => x)),
+            : List<dynamic>.from(categories.map((x) => x.toJson())),
+        "tags": tags == null
+            ? null
+            : List<dynamic>.from(tags.map((x) => x.toJson())),
+      };
+}
+
+class Category {
+  Category({
+    this.categoryId,
+    this.name,
+    this.nicename,
+  });
+
+  int categoryId;
+  String name;
+  String nicename;
+
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+        categoryId: json["category_id"] == null ? null : json["category_id"],
+        name: json["name"] == null ? null : json["name"],
+        nicename: json["nicename"] == null ? null : json["nicename"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "category_id": categoryId == null ? null : categoryId,
+        "name": name == null ? null : name,
+        "nicename": nicename == null ? null : nicename,
+      };
+}
+
+class Tag {
+  Tag({
+    this.tagId,
+    this.name,
+    this.nicename,
+  });
+
+  int tagId;
+  String name;
+  String nicename;
+
+  factory Tag.fromJson(Map<String, dynamic> json) => Tag(
+        tagId: json["tag_id"] == null ? null : json["tag_id"],
+        name: json["name"] == null ? null : json["name"],
+        nicename: json["nicename"] == null ? null : json["nicename"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "tag_id": tagId == null ? null : tagId,
+        "name": name == null ? null : name,
+        "nicename": nicename == null ? null : nicename,
       };
 }
