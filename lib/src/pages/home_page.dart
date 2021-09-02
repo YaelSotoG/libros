@@ -52,7 +52,8 @@ class HomePage extends StatelessWidget {
                 return ListTile(
                   onTap: () {
                     final route = MaterialPageRoute(builder: (context) {
-                      return CategoriaPage();
+                      return CategoriaPage(
+                          snapshot.data[index].categoryId.toString());
                     });
                     Navigator.push(context, route);
                   },
