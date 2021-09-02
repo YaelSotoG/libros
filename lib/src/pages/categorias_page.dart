@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:libros/src/models/libro_model.dart';
+import 'package:libros/src/pages/pdf_page.dart';
 
 import 'home_page.dart';
 // import 'package:libros/src/models/libro_model.dart';
@@ -37,7 +38,13 @@ class CategoriaPage extends StatelessWidget {
                           Expanded(
                             child: TextButton(
                               onPressed: () {
-                                print('tap');
+                                print(snapshot.data[index].urlDownload);
+                                final route =
+                                    MaterialPageRoute(builder: (context) {
+                                  return LectorPage(
+                                      snapshot.data[index].urlDownload);
+                                });
+                                Navigator.push(context, route);
                               },
                               child: FadeInImage.assetNetwork(
                                   placeholder: 'assets/img/loading.gif',
